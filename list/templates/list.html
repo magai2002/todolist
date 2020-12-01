@@ -1,0 +1,58 @@
+{% extends 'base.html' %}
+
+{% block content %}
+
+{% load static %}
+
+<main role="main" class="inner cover">
+	<table class="table table-light" >
+  <thead class="thead-light">
+    <tr>
+      <th scope="col">Task/Assignment</th>
+      <th scope="col">Deadline</th>
+      <th scope="col">Completed</th>
+      <th scope="col">Delete item</th>
+    </tr>
+  </thead>
+  {% if all_items %}
+  	{% for x in all_items %}
+		  <tbody>
+		  	{% if x.completed %}
+			 	<tr>
+			 		<td class="striker"><a class="text-dark" href="{% url 'edit' x.pk %}">{{ x.item }}</a></td>
+			 		<td class="striker">{{ x.deadline }}</td>
+			 		<td><a href="{% url 'uncross' x.pk %}" class="btn btn-info">Uncross</a></td>
+			 		<td><a href="{% url 'delete' x.pk %}" class="btn btn-danger">Delete</a></td>
+			 	</tr>
+			{% else %}
+				<tr>
+			 		<td><a class="text-dark" href="{% url 'edit' x.pk %}">{{ x.item }}</a></td>
+			 		<td>{{ x.deadline }}</td>
+			 		<td><a href="{% url 'cross_off' x.pk %}" class="btn btn-info">Cross</a></td>
+			 		<td><a href="{% url 'delete' x.pk %}" class="btn btn-danger">Delete</a></td>
+			 	</tr>
+			{% endif %}
+		  </tbody>
+	{% endfor %}
+  {% endif %}
+</table>
+	<br>
+	{% if messages %}
+
+      {% for message in messages %}
+        <div class="alert alert-warning alert-dismissible fade show" role="alert">
+          <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+        </button>
+        {{ message }}
+        </div>
+        <br>
+      {% endfor %}
+
+    {% endif %}
+    <p class="lead">
+      <a href="{% url 'index' %}" class="btn btn-lg btn-primary">Back</a>
+    </p>
+  </main>
+
+{% endblock %}

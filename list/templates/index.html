@@ -1,0 +1,49 @@
+{% extends 'base.html' %}
+
+{% block content %}
+
+{% load static %}
+
+<main role="main" class="inner cover">
+    <h1 class="cover-heading">Simple To-Do List</h1>
+    <p class="lead">Welcome to your "To-Do List"! Use this application wisely and may the force be with you!:)</p>
+
+    {% if messages %}
+
+      {% for message in messages %}
+        <div class="alert alert-warning alert-dismissible fade show" role="alert">
+          <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+        </button>
+        {{ message }}
+        </div>
+      {% endfor %}
+
+    {% endif %}
+
+    <form method="POST">
+      {% csrf_token %}
+      <div class="form-group">
+        <label for="exampleInputPassword1">Task/Assignment</label>
+        <input type="text" class="form-control" name="item" placeholder="What you have to do">
+      </div>
+      <div class="form-group">
+        <label for="exampleInputPassword1">Deadline</label>
+        <input type="text" class="form-control" name="deadline" placeholder="mm/dd/yyyy hh:mm">
+      </div>
+      <button type="submit" class="btn btn-lg btn-success">Add to my list</button>
+    </form>
+    <br/>
+    <p class="lead">
+      <a href="{% url 'list' %}" class="btn btn-lg btn-primary">Go to my list</a>
+    </p>
+  </main>
+
+<script type="text/javascript">
+  $(function(){
+    $('#datetime').datetimepicker();
+  });
+</script>
+
+
+{% endblock %}
